@@ -49,7 +49,6 @@ class EmojiChatCommand implements CommandExecutor {
 				sender.sendMessage(ChatColor.GREEN + "/emojichat resourcepack: " + ChatColor.AQUA + "Re-sends the resourcepack.");
 				sender.sendMessage(ChatColor.GREEN + "/emojichat reload: " + ChatColor.AQUA + "Reloads the EmojiChat config.");
 				sender.sendMessage(ChatColor.GREEN + "/emojichat toggle: " + ChatColor.AQUA + "Toggles emoji shortcuts on or off.");
-				sender.sendMessage(ChatColor.GREEN + "/emojichat list: " + ChatColor.AQUA + "Lists all of the enabled emojis.");
 				return true;
 			case "resourcepack":
 				if (!sender.hasPermission("emojichat.see")) {
@@ -84,20 +83,6 @@ class EmojiChatCommand implements CommandExecutor {
 					sender.sendMessage(ChatColor.AQUA + "Emoji shortcuts are now " + (plugin.getEmojiHandler().hasShortcutsOff((Player) sender) ? ChatColor.RED + "disabled" : ChatColor.GREEN + "enabled") + ChatColor.AQUA + ".");
 				} else {
 					sender.sendMessage(ChatColor.RED + "Oops, you have to be a player to toggle shortcuts.");
-				}
-				return true;
-			case "list":
-				if (!sender.hasPermission("emojichat.list")) {
-					sender.sendMessage(ChatColor.RED + "You need " + ChatColor.GOLD + "emojichat.list" + ChatColor.RED + " to use this command.");
-					return true;
-				}
-				if (!(sender instanceof Player)) { // Send chat version if the sender isn't a player
-					sender.sendMessage(ChatColor.AQUA + "---------- EmojiChat List ----------");
-					for (String key : plugin.getEmojiHandler().getEmojis().keySet()) {
-						sender.sendMessage(ChatColor.AQUA + key + " " + ChatColor.RESET + plugin.getEmojiHandler().getEmojis().get(key));
-					}
-				} else { // Send GUI version
-					((Player) sender).openInventory(plugin.emojiChatGui.getInventory(0));
 				}
 				return true;
 			default:

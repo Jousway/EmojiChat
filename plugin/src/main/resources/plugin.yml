@@ -6,8 +6,6 @@ website: "https://github.com/RadBuilder/EmojiChat/"
 main: io.github.radbuilder.emojichat.EmojiChat
 api-version: 1.13
 
-softdepend: [DiscordSRV, MVdWPlaceholderAPI, PlaceholderAPI, TelegramChat]
-
 commands:
   emojichat:
     description: The main EmojiChat command

@@ -8,7 +8,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -152,26 +151,5 @@ class EmojiChatListener implements Listener {
 		}
 		
 		event.setMessage(command);
-	}
-	
-	@EventHandler
-	void onInventoryClick(InventoryClickEvent event) {
-		if (event.getInventory().getTitle().contains("Emoji List")) {
-			event.setCancelled(true);
-			if (event.getCurrentItem() != null && event.getCurrentItem().getType() == Material.DIAMOND && event.getCurrentItem().hasItemMeta()
-					&& event.getCurrentItem().getItemMeta().hasDisplayName()) { // Make sure the item clicked is a page change item
-				try {
-					int currentPage = Integer.parseInt(event.getInventory().getTitle().split(" ")[3]) - 1; // Get the page number from the title
-					
-					if (event.getCurrentItem().getItemMeta().getDisplayName().contains("<-")) { // Back button
-						event.getWhoClicked().openInventory(plugin.emojiChatGui.getInventory(currentPage - 1));
-					} else { // Next button
-						event.getWhoClicked().openInventory(plugin.emojiChatGui.getInventory(currentPage + 1));
-					}
-				} catch (Exception e) { // Something happened, not sure what, so just reset their page to 0
-					event.getWhoClicked().openInventory(plugin.emojiChatGui.getInventory(0));
-				}
-			}
-		}
 	}
 }
