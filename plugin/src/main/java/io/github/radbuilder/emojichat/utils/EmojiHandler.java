@@ -32,10 +32,6 @@ public class EmojiHandler {
 	 */
 	private final HashMap<String, String> shortcuts;
 	/**
-	 * Disabled emoji characters to prevent others from using them with the resource pack.
-	 */
-	private final List<Character> disabledCharacters;
-	/**
 	 * If we should fix the emoji's color (colored chat removes emoji coloring)
 	 */
 	private boolean fixColoring;
@@ -47,10 +43,6 @@ public class EmojiHandler {
 	 * EmojiChat main class instance.
 	 */
 	private final EmojiChat plugin;
-	/**
-	 * The {@link EmojiPackVariant} being used.
-	 */
-	private EmojiPackVariant packVariant;
 	
 	/**
 	 * Creates the emoji handler with the main class instance.
@@ -62,7 +54,6 @@ public class EmojiHandler {
 		
 		emojis = new LinkedHashMap<>();
 		shortcuts = new HashMap<>();
-		disabledCharacters = new ArrayList<>();
 		shortcutsOff = new ArrayList<>();
 		
 		load(plugin);
@@ -75,15 +66,6 @@ public class EmojiHandler {
 	 */
 	public LinkedHashMap<String, Character> getEmojis() {
 		return emojis;
-	}
-	
-	/**
-	 * Gets the {@link #disabledCharacters} list.
-	 *
-	 * @return The {@link #disabledCharacters} list.
-	 */
-	public List<Character> getDisabledCharacters() {
-		return disabledCharacters;
 	}
 	
 	/**
@@ -126,9 +108,7 @@ public class EmojiHandler {
 	 */
 	private boolean validateConfig(FileConfiguration config) {
 		try {
-			return config.get("shortcuts") != null && config.get("disabled-emojis") != null
-					&& config.get("fix-emoji-coloring") != null && config.get("disable-emojis") != null
-					&& config.get("pack-variant") != null;
+			return config.get("shortcuts") != null && config.get("fix-emoji-coloring") != null && config.get("pack-variant") != null;
 		} catch (Exception e) {
 			return false;
 		}
@@ -148,24 +128,6 @@ public class EmojiHandler {
 	}
 	
 	/**
-	 * Loads the disabled emojis from the config.
-	 *
-	 * @param config The config to load disabled emojis from.
-	 * @param plugin The EmojiChat main class instance.
-	 */
-	private void loadDisabledEmojis(FileConfiguration config, EmojiChat plugin) {
-		if (config.getBoolean("disable-emojis")) {
-			for (String disabledEmoji : config.getStringList("disabled-emojis")) {
-				if (disabledEmoji == null || !emojis.containsKey(disabledEmoji)) {
-					plugin.getLogger().warning("Invalid emoji specified in 'disabled-emojis': '" + disabledEmoji + "'. Skipping...");
-					continue;
-				}
-				disabledCharacters.add(emojis.remove(disabledEmoji)); // Remove disabled emojis from the emoji list
-			}
-		}
-	}
-	
-	/**
 	 * If emoji coloring should be fixed.
 	 *
 	 * @return True if emoji coloring should be fixed, false otherwise.
@@ -178,15 +140,7 @@ public class EmojiHandler {
 	 * Loads the emojis and their shortcuts into the {@link #emojis}.
 	 */
 	private void loadEmojis() {
-		char emojiChar = '가'; // The unicode character we start with depending on the pack variant, which gets incremented
-		switch (packVariant) {
-			case KOREAN:
-				emojiChar = '가';
-				break;
-			case CHINESE:
-				emojiChar = '娀';
-				break;
-		}
+		char emojiChar = '娀';
 		
 		try {
 			InputStream listInput = getClass().getResourceAsStream("/list.txt");
@@ -212,7 +166,6 @@ public class EmojiHandler {
 	public void disable() {
 		emojis.clear();
 		shortcuts.clear();
-		disabledCharacters.clear();
 		shortcutsOff.clear();
 	}
 	
@@ -223,10 +176,7 @@ public class EmojiHandler {
 	 */
 	public void load(EmojiChat plugin) {
 		disable();
-		
-		// Get the pack variant we're using BEFORE loading emojis
-		packVariant = EmojiPackVariant.getVariantbyId(plugin.getConfig().getInt("pack-variant"));
-		
+
 		loadEmojis(); // Loads ALL emojis
 		
 		if (!validateConfig(plugin.getConfig())) { // Make sure the config is valid
@@ -235,7 +185,6 @@ public class EmojiHandler {
 			plugin.getLogger().warning("If you're still running into issues after fixing your config, delete it and restart your server.");
 		} else { // Config is valid, load config data
 			loadShortcuts(plugin.getConfig()); // Loads all of the shortcuts specified in the config
-			loadDisabledEmojis(plugin.getConfig(), plugin); // Loads all of the disabled emojis specified in the config.
 			fixColoring = plugin.getConfig().getBoolean("fix-emoji-coloring");
 		}
 	}
@@ -248,7 +197,6 @@ public class EmojiHandler {
 	 */
 	public String toEmoji(String message) {
 		for (String key : emojis.keySet()) {
-			plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
 			message = message.replace(key, plugin.getEmojiHandler().getEmojis().get(key).toString());
 		}
 		return message;
@@ -262,7 +210,6 @@ public class EmojiHandler {
 	 */
 	public String toEmojiFromSign(String line) {
 		for (String key : emojis.keySet()) {
-			plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(line, key));
 			line = line.replace(key, ChatColor.WHITE + "" + emojis.get(key) + ChatColor.BLACK); // Sets the emoji color to white for correct coloring
 		}
 		return line;
@@ -282,7 +229,6 @@ public class EmojiHandler {
 			String chatColor = message.substring(0, 2); // Gets the chat color of the message, i.e. §a
 			boolean hasColor = chatColor.contains("§");
 			for (String key : emojis.keySet()) {
-				plugin.getMetricsHandler().addEmojiUsed(StringUtils.countMatches(message, key));
 				message = message.replace(key, ChatColor.WHITE + "" + emojis.get(key) + (hasColor ? chatColor : "")); // Sets the emoji color to white for correct coloring
 			}
 		}
@@ -297,33 +243,9 @@ public class EmojiHandler {
 	 */
 	public String translateShorthand(String message) {
 		for (String key : plugin.getEmojiHandler().getShortcuts().keySet()) {
-			plugin.getMetricsHandler().addShortcutUsed(StringUtils.countMatches(message, key));
 			message = message.replace(key, plugin.getEmojiHandler().getShortcuts().get(key));
 		}
 		return message;
 	}
-	
-	/**
-	 * Checks if the specified message contains a disabled character, if enabled.
-	 *
-	 * @param message The message to check.
-	 * @return True if the message contains a disabled character, false otherwise.
-	 */
-	public boolean containsDisabledCharacter(String message) {
-		for (Character disabledCharacter : disabledCharacters) {
-			if (message.contains(disabledCharacter.toString())) { // Message contains a disabled character
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
-	 * Gets the {@link EmojiPackVariant} being used.
-	 *
-	 * @return The {@link EmojiPackVariant} being used.
-	 */
-	public EmojiPackVariant getPackVariant() {
-		return packVariant;
-	}
+
 }

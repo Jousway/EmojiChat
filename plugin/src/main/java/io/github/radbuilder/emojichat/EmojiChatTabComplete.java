@@ -21,7 +21,7 @@ class EmojiChatTabComplete implements TabCompleter {
 	/**
 	 * The list of /emojichat sub-commands.
 	 */
-	private final List<String> SUB_COMMANDS = new ArrayList<>(Arrays.asList("help", "resourcepack", "reload", "toggle", "list"));
+	private final List<String> SUB_COMMANDS = new ArrayList<>(Arrays.asList("help", "resourcepack", "reload", "toggle"));
 	
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String s, String[] args) {

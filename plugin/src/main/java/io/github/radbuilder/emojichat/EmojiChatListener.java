@@ -43,24 +43,13 @@ class EmojiChatListener implements Listener {
 	void onJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		
-		// Send the player an alert if there's an update available
-		if (player.hasPermission("emojichat.updates") && plugin.updateChecker.updateAvailable) {
-			player.sendMessage(ChatColor.AQUA + "An update for EmojiChat is available.");
-			player.sendMessage(ChatColor.AQUA + "Current version: " + ChatColor.GOLD + plugin.updateChecker.currentVersion
-					+ ChatColor.AQUA + ". Latest version: " + ChatColor.GOLD + plugin.updateChecker.latestVersion + ChatColor.AQUA + ".");
-		}
-		
 		if (!autoDownloadResourcePack) // If auto downloading of the ResourcePack is disabled
 			return;
 		
 		// Send the player the resource pack
 		Bukkit.getScheduler().runTaskLater(plugin, () -> {
 			if (player.hasPermission("emojichat.see")) { // If the player can see emojis
-				try {
-					player.setResourcePack(plugin.getEmojiHandler().getPackVariant().getUrl(plugin.getConfig().getString("pack-quality")), plugin.getEmojiHandler().getPackVariant().getHash(plugin.getConfig().getString("pack-quality"))); // If the Spigot version supports loading cached versions
-				} catch (Exception | NoSuchMethodError e) {
-					player.setResourcePack(plugin.getEmojiHandler().getPackVariant().getUrl(plugin.getConfig().getString("pack-quality"))); // If the Spigot version doesn't support loading cached versions
-				}
+				player.setResourcePack("http://jousway.co.uk/shit/UKSRTemoji.zip");
 			}
 		}, 20L); // Give time for the player to join
 	}
@@ -79,13 +68,6 @@ class EmojiChatListener implements Listener {
 		
 		// Replace shortcuts with emojis
 		message = plugin.getEmojiHandler().toEmojiFromChat(message);
-		
-		// If the message contains a disabled character
-		if (plugin.getEmojiHandler().containsDisabledCharacter(message)) {
-			event.setCancelled(true);
-			event.getPlayer().sendMessage(ChatColor.RED + "Oops! You can't use disabled emoji characters!");
-			return;
-		}
 		
 		event.setMessage(message);
 	}
@@ -108,13 +90,6 @@ class EmojiChatListener implements Listener {
 			
 			// Replace shortcuts with emojis
 			line = plugin.getEmojiHandler().toEmojiFromSign(line);
-			
-			// If the message contains a disabled character
-			if (plugin.getEmojiHandler().containsDisabledCharacter(line)) {
-				event.setCancelled(true);
-				event.getPlayer().sendMessage(ChatColor.RED + "Oops! You can't use disabled emoji characters!");
-				return;
-			}
 			
 			event.setLine(i, line);
 		}
@@ -142,14 +117,7 @@ class EmojiChatListener implements Listener {
 		
 		// Replace shortcuts with emojis
 		command = plugin.getEmojiHandler().toEmoji(command);
-		
-		// If the message contains a disabled character
-		if (plugin.getEmojiHandler().containsDisabledCharacter(command)) {
-			event.setCancelled(true);
-			event.getPlayer().sendMessage(ChatColor.RED + "Oops! You can't use disabled emoji characters!");
-			return;
-		}
-		
+				
 		event.setMessage(command);
 	}
 }

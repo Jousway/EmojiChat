@@ -57,10 +57,8 @@ public class EmojiChatConfigUpdater {
 		}
 		
 		// Config v2 values
-		String metricsCollection = "FULL";
 		boolean downloadResourcePack = true;
 		if (configVersion > 1) {
-			metricsCollection = config.getString("metrics-collection");
 			downloadResourcePack = config.getBoolean("download-resourcepack");
 		}
 		
@@ -75,21 +73,6 @@ public class EmojiChatConfigUpdater {
 		// Config lines
 		List<String> configLines = new ArrayList<>();
 		configLines.add("# Configuration file for EmojiChat by RadBuilder");
-		configLines.add("");
-		configLines.add("# EmojiChat collects metrics in order to get a better understanding of what configurations are used.");
-		configLines.add("# Statistics include how many servers it's being used on and what version of Bukkit/Spigot they're using,");
-		configLines.add("# how many players are using it, server information such as Java version, how many emojis are used,");
-		configLines.add("# and how many servers are using each feature. This data is anonymous, and is submitted to understand what");
-		configLines.add("# types of server configurations are being used to build a better plugin (i.e. MC/Java versions to continue supporting,");
-		configLines.add("# features to keep/remove). Data collection has very little/no impact on server performance. I'd appreciate if you");
-		configLines.add("# keep this set to FULL, but I completely understand if you want to send less data or opt out.");
-		configLines.add("#");
-		configLines.add("# 'FULL'  collects what 'SOME' collects, and data on what config options you're using.");
-		configLines.add("# 'SOME'  collects what 'BASIC' collects, and what hooks you're using.");
-		configLines.add("# 'BASIC' collects data on what Java version you're using, Bukkit/Spigot version you're using, other general server");
-		configLines.add("#         information like player count, how many emojis you've used, and shortcuts you've used.");
-		configLines.add("# 'OFF'   collects NO DATA, however, I would appreciate it if you send at least basic data.");
-		configLines.add("metrics-collection: '" + metricsCollection + "'");
 		configLines.add("");
 		configLines.add("# If you're using chat color plugins, this will remove the coloring for emojis to be displayed correctly.");
 		configLines.add("fix-emoji-coloring: " + fixEmojiColoring);
@@ -110,20 +93,6 @@ public class EmojiChatConfigUpdater {
 		configLines.add("# If EmojiChat should auto download the ResourcePack. If you'd rather have your players manually");
 		configLines.add("# download or use /emojichat resourcepack, set this to false.");
 		configLines.add("download-resourcepack: " + downloadResourcePack);
-		configLines.add("# The resource pack variant to use.");
-		configLines.add("# 1 replaces Korean characters with emojis, and 2 replaces Chinese characters with emojis.");
-		configLines.add("# WARNING: Changing this will ruin things like signs that already have the other language's characters!");
-		configLines.add("# Don't change this unless your normal language is being overwritten by emojis.");
-		configLines.add("# Variant 2 is now default because of https://bugs.mojang.com/browse/MC-41270 .");
-		configLines.add("pack-variant: " + packVariant);
-		configLines.add("# If the resource pack should be 'HD' (High Definition) or 'SD' (Standard Definition).");
-		configLines.add("# HD textures aren't compatible with Minecraft (not server) versions 1.13+,");
-		configLines.add("# and will result in emojis not being displayed correctly.");
-		configLines.add("# If you're using a server that supports any Minecraft versions including 1.13+, use SD.");
-		configLines.add("# Otherwise use HD for better quality.");
-		configLines.add("# The file size difference between HD and SD packs is extremely small, and shouldn't");
-		configLines.add("# be a factor when choosing which pack to use.");
-		configLines.add("pack-quality: 'SD'");
 		configLines.add("");
 		configLines.add("# Shortcuts will replace the items in the list with the correct emoji name.");
 		configLines.add("# For example, :) will be replaced with :grinning:, which then will turn it into the emoji.");
@@ -194,40 +163,10 @@ public class EmojiChatConfigUpdater {
 			configLines.add("  - ':10:'");
 			configLines.add("  asterisk:");
 			configLines.add("  - ':*:'");
-		}
-		configLines.add("");
-		configLines.add("# If certain emojis should be disabled or not.");
-		configLines.add("# If true, it will disable all of the emojis specified in 'disabled-emojis'");
-		configLines.add("# If false, emojis specified in 'disabled-emojis' will be ignored.");
-		configLines.add("disable-emojis: " + disableEmojis);
-		configLines.add("# Emojis to disable. Remove them from the list to enable them.");
-		configLines.add("# By default, profane and potentially offensive emojis are disabled.");
-		configLines.add("disabled-emojis:");
-		for (String disabledEmoji : disabledEmojis) {
-			configLines.add("- '" + disabledEmoji + "'");
-		}
-		if (configVersion == 1) {
-			configLines.add("- ':sweat_drops:'");
-			configLines.add("- ':banana:'");
-			configLines.add("- ':cherries:'");
-			configLines.add("- ':peach:'");
-			configLines.add("- ':tomato:'");
-			configLines.add("- ':eggplant:'");
-			configLines.add("- ':cucumber:'");
-			configLines.add("- ':beer:'");
-			configLines.add("- ':beers:'");
-			configLines.add("- ':clinking_glasses:'");
-			configLines.add("- ':wine_glass:'");
-			configLines.add("- ':tumbler_glass:'");
-			configLines.add("- ':cocktail:'");
-			configLines.add("- ':face_with_symbols_over_mouth:'");
-			configLines.add("- ':face_vomiting:'");
-		}
-		configLines.add("");
-		configLines.add("# The config version, used to be able to update your config when future versions come out.");
-		configLines.add("# Don't change this, or you'll experience issues with EmojiChat.");
-		configLines.add("config-version: " + CONFIG_VERSION);
-		
+			configLines.add("  oncoming_police_car:");
+			configLines.add("  - ':fbi:'");
+			configLines.add("  - ':police:'");
+		}		
 		// Update the config
 		setConfig(plugin, configLines);
 		// Clear non-used lists

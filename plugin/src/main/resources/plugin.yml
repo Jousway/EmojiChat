@@ -1,10 +1,10 @@
 name: EmojiChat
-version: 1.8.1
-description: Adds emojis to your chat
-author: RadBuilder
+version: 0.1
+description: Adds UKSRTemojis to your chat
+author: RadBuilder - Modded by Jousway
 website: "https://github.com/RadBuilder/EmojiChat/"
 main: io.github.radbuilder.emojichat.EmojiChat
-api-version: 1.13
+api-version: 1.14
 
 commands:
   emojichat:
@@ -18,19 +18,14 @@ permissions:
     children:
       emojichat.help: true
       emojichat.see: true
-      emojichat.list: true
       emojichat.toggle: true
       emojichat.use: true
       emojichat.reload: true
-      emojichat.updates: true
   emojichat.help:
     description: Allows you to open the EmojiChat help menu
     default: op
   emojichat.see:
     description: Allows you to see emojis
-    default: op
-  emojichat.list:
-    description: Allows you to list all of the emojis
     default: op
   emojichat.toggle:
     description: Allows you to toggle emoji shortcuts on or off
@@ -53,7 +48,4 @@ permissions:
     default: op
   emojichat.reload:
     description: Allows you to reload the EmojiChat config
-    default: op
-  emojichat.updates:
-    description: Allows you to recieve join notifications when an update is available for EmojiChat
     default: op
