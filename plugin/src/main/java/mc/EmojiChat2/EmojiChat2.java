@@ -1,7 +1,7 @@
-package io.github.radbuilder.emojichat;
+package mc.EmojiChat2;
 
-import io.github.radbuilder.emojichat.utils.EmojiChatConfigUpdater;
-import io.github.radbuilder.emojichat.utils.EmojiHandler;
+import mc.EmojiChat2.utils.EmojiChatConfigUpdater;
+import mc.EmojiChat2.utils.EmojiHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * @version 1.7
  * @since 1.0
  */
-public class EmojiChat extends JavaPlugin {
+public class EmojiChat2 extends JavaPlugin {
 	/**
 	 * The emoji handler that stores emoji data.
 	 */

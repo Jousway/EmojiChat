@@ -1,4 +1,4 @@
-package io.github.radbuilder.emojichat;
+package mc.EmojiChat2;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

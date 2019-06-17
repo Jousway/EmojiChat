@@ -1,4 +1,4 @@
-package io.github.radbuilder.emojichat;
+package mc.EmojiChat2;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,7 +23,7 @@ class EmojiChatListener implements Listener {
 	/**
 	 * EmojiChat main class instance.
 	 */
-	private final EmojiChat plugin;
+	private final EmojiChat2 plugin;
 	/**
 	 * If EmojiChat should automatically download the ResourcePack for the player.
 	 */
@@ -34,7 +34,7 @@ class EmojiChatListener implements Listener {
 	 *
 	 * @param plugin The EmojiChat main class instance.
 	 */
-	EmojiChatListener(EmojiChat plugin) {
+	EmojiChatListener(EmojiChat2 plugin) {
 		this.plugin = plugin;
 		autoDownloadResourcePack = plugin.getConfig().getBoolean("download-resourcepack");
 	}
@@ -49,7 +49,7 @@ class EmojiChatListener implements Listener {
 		// Send the player the resource pack
 		Bukkit.getScheduler().runTaskLater(plugin, () -> {
 			if (player.hasPermission("emojichat.see")) { // If the player can see emojis
-				player.setResourcePack("http://jousway.co.uk/shit/UKSRTemoji.zip");
+				player.setResourcePack(plugin.getConfig().getString("ResourcePack-Location"));
 			}
 		}, 20L); // Give time for the player to join
 	}

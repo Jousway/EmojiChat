@@ -1,4 +1,4 @@
-package io.github.radbuilder.emojichat;
+package mc.EmojiChat2;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -17,21 +17,21 @@ class EmojiChatCommand implements CommandExecutor {
 	/**
 	 * EmojiChat main class instance.
 	 */
-	private final EmojiChat plugin;
+	private final EmojiChat2 plugin;
 	
 	/**
 	 * Creates the EmojiChat command class with the main class instance.
 	 *
 	 * @param plugin The EmojiChat main class instance.
 	 */
-	EmojiChatCommand(EmojiChat plugin) {
+	EmojiChatCommand(EmojiChat2 plugin) {
 		this.plugin = plugin;
 	}
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
 		if (args.length < 1) {
-			sender.sendMessage(ChatColor.AQUA + "EmojiChat v1.8.1 by RadBuilder");
+			sender.sendMessage(ChatColor.AQUA + "EmojiChat2 v1.0 by RadBuilder");
 			sender.sendMessage(ChatColor.AQUA + "Use " + ChatColor.GREEN + "/emojichat help" + ChatColor.AQUA + " for help.");
 			return true;
 		}
@@ -57,7 +57,7 @@ class EmojiChatCommand implements CommandExecutor {
 				}
 				
 				if (sender instanceof Player) {
-					((Player) sender).setResourcePack("http://jousway.co.uk/shit/UKSRTemoji.zip");
+					((Player) sender).setResourcePack(plugin.getConfig().getString("ResourcePack-Location"));
 					sender.sendMessage(ChatColor.GREEN + "Sent the EmojiChat ResourcePack.");
 					sender.sendMessage(ChatColor.AQUA + "If you still can't see emojis, make sure the settings for this server (on the server list) have the resource pack option set to prompt or enabled.");
 				}

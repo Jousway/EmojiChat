@@ -1,5 +1,7 @@
 # Configuration file for EmojiChat by RadBuilder
 
+ResourcePack-Location: 'http://jousway.co.uk/shit/UKSRTemoji.zip'
+
 # If you're using chat color plugins, this will remove the coloring for emojis to be displayed correctly.
 fix-emoji-coloring: false
 

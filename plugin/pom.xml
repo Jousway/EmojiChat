@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>io.github.radbuilder</groupId>
+        <groupId>mc.EmojiChat2</groupId>
         <artifactId>emojichat-parent</artifactId>
-        <version>1.8.1</version>
+        <version>1.0</version>
     </parent>
 
     <properties>
@@ -16,14 +16,14 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
-    <name>EmojiChat Plugin</name>
+    <name>EmojiChat2 Plugin</name>
     <artifactId>emojichat-plugin</artifactId>
-    <version>1.8.1</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <build>
         <directory>../target</directory>
-        <finalName>EmojiChat</finalName>
+        <finalName>EmojiChat2</finalName>
         <resources>
             <resource>
                 <targetPath>.</targetPath>
@@ -33,8 +33,6 @@
                     <include>plugin.yml</include>
                     <include>config.yml</include>
                     <include>list.txt</include>
-                    <include>hash.1.txt</include>
-                    <include>hash.2.txt</include>
                 </includes>
             </resource>
         </resources>
@@ -54,7 +52,7 @@
                 <configuration>
                     <artifactSet>
                         <includes>
-                            <include>io.github.radbuilder.emojichat</include>
+                            <include>mc.EmojiChat2</include>
                         </includes>
                     </artifactSet>
                 </configuration>
@@ -75,7 +73,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.13.2-R0.1-SNAPSHOT</version>
+            <version>1.14.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

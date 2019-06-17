@@ -1,9 +1,9 @@
-name: EmojiChat
-version: 0.1
-description: Adds UKSRTemojis to your chat
+name: EmojiChat2
+version: 1.0
+description: Adds EmojiChat2 to your chat
 author: RadBuilder - Modded by Jousway
-website: "https://github.com/RadBuilder/EmojiChat/"
-main: io.github.radbuilder.emojichat.EmojiChat
+website: "https://github.com/Jousway/EmojiChat"
+main: mc.EmojiChat2.EmojiChat2
 api-version: 1.14
 
 commands:

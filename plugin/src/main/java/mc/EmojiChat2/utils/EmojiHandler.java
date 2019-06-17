@@ -1,6 +1,6 @@
-package io.github.radbuilder.emojichat.utils;
+package mc.EmojiChat2.utils;
 
-import io.github.radbuilder.emojichat.EmojiChat;
+import mc.EmojiChat2.EmojiChat2;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -42,14 +42,14 @@ public class EmojiHandler {
 	/**
 	 * EmojiChat main class instance.
 	 */
-	private final EmojiChat plugin;
+	private final EmojiChat2 plugin;
 	
 	/**
 	 * Creates the emoji handler with the main class instance.
 	 *
 	 * @param plugin The EmojiChat main class instance.
 	 */
-	public EmojiHandler(EmojiChat plugin) {
+	public EmojiHandler(EmojiChat2 plugin) {
 		this.plugin = plugin;
 		
 		emojis = new LinkedHashMap<>();
@@ -108,7 +108,7 @@ public class EmojiHandler {
 	 */
 	private boolean validateConfig(FileConfiguration config) {
 		try {
-			return config.get("shortcuts") != null && config.get("fix-emoji-coloring") != null && config.get("pack-variant") != null;
+			return config.get("shortcuts") != null && config.get("fix-emoji-coloring") != null;
 		} catch (Exception e) {
 			return false;
 		}
@@ -174,7 +174,7 @@ public class EmojiHandler {
 	 *
 	 * @param plugin The EmojiChat main class instance.
 	 */
-	public void load(EmojiChat plugin) {
+	public void load(EmojiChat2 plugin) {
 		disable();
 
 		loadEmojis(); // Loads ALL emojis
